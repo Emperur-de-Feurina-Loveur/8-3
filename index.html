@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chúc mừng 8/3 theo số thứ tự</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #ffdbe8 0%, #fff6fa 50%, #ffe8f1 100%);
+      color: #7a214a;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      text-align: center;
+      background: rgba(255,255,255,0.82);
+      border: 2px solid #ffc4d8;
+      border-radius: 26px;
+      padding: 28px 20px;
+      box-shadow: 0 12px 30px rgba(199, 68, 117, 0.12);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 40px;
+      color: #d63384;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 18px;
+      color: #8f3b64;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel, .preview-panel {
+      background: rgba(255,255,255,0.87);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 10px 28px rgba(199, 68, 117, 0.12);
+      border: 2px solid #ffd5e3;
+    }
+
+    .panel h2, .preview-panel h2 {
+      margin-top: 0;
+      color: #c2185b;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #f3a9c2;
+      border-radius: 14px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 88px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.96;
+    }
+
+    .save-btn {
+      background: #e91e63;
+      color: white;
+      flex: 1;
+    }
+
+    .sample-btn {
+      background: #ffd6e5;
+      color: #a31f54;
+      flex: 1;
+    }
+
+    .search-btn {
+      background: #c2185b;
+      color: white;
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    .clear-btn {
+      background: #fff0f5;
+      color: #a31f54;
+      border: 1px solid #f3a9c2;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #9b4b6f;
+      line-height: 1.5;
+    }
+
+    .search-box {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 2px dashed #f2bfd2;
+    }
+
+    .wish-page {
+      min-height: 640px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      background: linear-gradient(160deg, #fff0f6 0%, #ffffff 45%, #fff6fb 100%);
+      border: 2px solid #ffd2e2;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), 0 14px 32px rgba(199, 68, 117, 0.14);
+    }
+
+    .wish-page::before,
+    .wish-page::after {
+      content: "✿";
+      position: absolute;
+      font-size: 72px;
+      color: rgba(233, 30, 99, 0.10);
+      z-index: 0;
+    }
+
+    .wish-page::before {
+      top: 18px;
+      left: 20px;
+    }
+
+    .wish-page::after {
+      bottom: 18px;
+      right: 24px;
+    }
+
+    .wish-left, .wish-right {
+      position: relative;
+      z-index: 1;
+      width: 50%;
+      padding: 30px;
+    }
+
+    .wish-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(255, 223, 235, 0.55), rgba(255,255,255,0.3));
+      border-right: 2px dashed #f2bfd2;
+    }
+
+    .wish-number {
+      align-self: flex-start;
+      background: #d63384;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(214, 51, 132, 0.22);
+    }
+
+    .wish-image {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 24px;
+      border: 4px solid white;
+      box-shadow: 0 10px 26px rgba(199, 68, 117, 0.18);
+      background: #ffe7f0;
+    }
+
+    .wish-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .mini-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #d63384;
+    }
+
+    .wish-name {
+      margin: 0 0 18px;
+      font-size: 42px;
+      line-height: 1.2;
+      color: #b3125b;
+    }
+
+    .wish-text {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.8;
+      color: #7a214a;
+      white-space: pre-wrap;
+    }
+
+    .empty-state {
+      min-height: 640px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #fff9fc, #fff3f8);
+      border: 2px dashed #f0b3c8;
+      color: #b45178;
+      padding: 30px;
+      font-size: 20px;
+      line-height: 1.7;
+    }
+
+    .list-note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #fff6fa;
+      border: 1px solid #f6c5d8;
+      color: #944568;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .wish-page {
+        flex-direction: column;
+      }
+
+      .wish-left, .wish-right {
+        width: 100%;
+      }
+
+      .wish-left {
+        border-right: none;
+        border-bottom: 2px dashed #f2bfd2;
+      }
+
+      .wish-name {
+        font-size: 32px;
+      }
+
+      .wish-text {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>Chúc Mừng 8/3</h1>
+      <p>Nhập số thứ tự để mở ra trang lời chúc riêng dành cho từng bạn trong danh sách lớp.</p>
+    </div>
+
+    <div class="layout">
+      <div class="panel">
+        <div class="search-box" style="margin-top: 0; padding-top: 0; border-top: none;">
+          <h2>Mở trang lời chúc</h2>
+          <label for="searchStt">Nhập số thứ tự cần xem</label>
+          <input id="searchStt" type="number" min="1" max="45" placeholder="Ví dụ: 7" />
+          <button class="search-btn" onclick="showWishPage()">Mở trang riêng</button>
+        </div>
+
+        <div class="hint">
+          Chỉ cần nhập đúng <b>số thứ tự</b> của bạn trong danh sách lớp để mở ra trang chúc mừng riêng.
+        </div>
+      </div>
+
+      <div class="preview-panel">
+        <h2>Trang chúc mừng riêng</h2>
+        <div id="displayArea"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const defaultImage = 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80';
+
+    const studentData = {
+      1: { stt: 1, name: "Huỳnh Bảo An", image: "https://drive.google.com/thumbnail?id=12O-QVVetX8MvmRiHwco8bsxBWhyhQ0j3&sz=w1000", wish: "Chúc brochacho 8/3 vui vẻ, trẻ đẹp nha" },
+      2: { stt: 2, name: "Trịnh Bình An", image: "https://drive.google.com/thumbnail?id=18882AglD3__gQ6XLvAEaJS1Y9ZSQNVaY&sz=w1000", wish: "Chúc bạn 8/3 vui vẻ, sớm kiếm được 8 tỷ (lợi khuẩn)" },
+      3: { stt: 3, name: "Bùi Thái Châu Anh", image: "https://drive.google.com/thumbnail?id=1_8Tm0em49qBzFaQcOjPrXGy7wdEKAgSS&sz=w1000", wish: "nà na na na phùng thanh độ hey hey, chúc bạn mồng 8/3 ngày càng học giỏi xinh đẹp và thành công trong con đường chuyên sinh nhé ahihi" },
+      4: { stt: 4, name: "Đoàn Nguyễn Thùy Anh", image: "https://drive.google.com/thumbnail?id=1_8Tm0em49qBzFaQcOjPrXGy7wdEKAgSS&sz=w1000", wish: "Chúc Thùy Anh 8/3 luôn vui vẻ, hạnh phúc, ngập tràn niềm vui. Chúc Thuỳ Anh luôn học giỏi, xinh đẹp và thành công trên con đường học tập của mình nhaaa!! 🥰🥰🥰 -CHỒNG THUỲ ANH-" },
+      6: { stt: 6, name: "Huỳnh Lê Minh Anh", image: "https://drive.google.com/thumbnail?id=18882AglD3__gQ6XLvAEaJS1Y9ZSQNVaY&sz=w1000", wish: "Chúc Manh ( Hồng :)) ) 8/3 vui vẻ, mạnh khoẻ, đạt được nhiều thành công trên con đường học tập và cuộc sống nhaaaaaaaaaaa" },
+      7: { stt: 7, name: "Nguyễn Hoàng Bảo Anh", image: "https://drive.google.com/thumbnail?id=1q_UyoAEvt3ppqk0kq_GrQKJ82rec0tTr&sz=w1000", wish: "Chúc Ri mùng 8 tháng 3 vui vẻ, dồi dào sức khỏe, ngày càng dễ thương cuti hơnn, có tất cả trừ vất vả, thuận lợi trong việc học hành, thi cử, gặp bài nào là làm được bài đó, đạt được nhiều thành công sau này bất kể gặp khó khăn thử thách thì cũng sẽ vượt qua dễ dàng" },
+      8: { stt: 8, name: "Phạm Nguyễn Khánh Chi", image: "https://drive.google.com/thumbnail?id=12O-QVVetX8MvmRiHwco8bsxBWhyhQ0j3&sz=w1000", wish: "Chúc Cheese cheese chành chành luôn mạnh khỏe, xinh đẹp, tự tin và có một ngày 8/3 thật đáng nhớ nha. hihihi" },
+      11: { stt: 11, name: "Võ Thị Hoàng  Thảo", image: "https://drive.google.com/thumbnail?id=1cQAqdfF_wNOrRXdqk7lia4qHFEZ-DjdN&sz=w1000", wish: "Chúc cô Thảo một ngày 8/3 vui vẻ, hạnh phúc và ngày càng xinh đẹp và thành công trong công việc." },
+      13: { stt: 13, name: "Nguyễn Thu Hà", image: "https://drive.google.com/thumbnail?id=1kHgtQykmM4m5BfEHnIeHDkGew6WMiyx3&sz=w1000", wish: "Chúc hạt dẻ cười 8/3  thật nhiều tiếng cười (hà hà hà), luôn đáng yêu, vui vẻ và tràn đầy năng lượng tích cực." },
+      15: { stt: 15, name: "Nguyễn Thị Thanh Huyền", image: "https://drive.google.com/thumbnail?id=1cj2uo_PZRhNT13n6fYENpzbPXOwLA3aQ&sz=w1000", wish: "Chúc mừng nhất lý một mồng tám tháng ba vui vẻ hạnh phúc và ngày càng học giỏi nhé bờ rô ahahahhahaha" },
+      17: { stt: 17, name: "Nguyễn Thị Lan", image: "https://drive.google.com/thumbnail?id=1aM88z5P_9zB-XvXEl1jy0D3JmIf_g2t5&sz=w1000", wish: "8/3 vui vẻ nha chị đẹp, chúc chị đẹp của em ngày càng xinh đẹp, học giỏi hơn nữa nhá" },
+      18: { stt: 18, name: "Hà Thùy Lâm", image: "https://drive.google.com/thumbnail?id=1oJ02CSQ7cWk6jGkw-zVwOMeYSw9m4uup&sz=w1000", wish: "Chúc em Hà Thuỳ Lâm 8/3 rực rỡ như ánh nắng, tỏa sáng như ngàn vì sao, luôn xinh đẹp, hạnh phúc và thành công trên mọi nẻo đường. Mong em mãi giữ nụ cười tươi, trái tim ấm áp và những ước mơ thật đẹp trong tim!  💐✨" },
+      19: { stt: 19, name: "Đào Thị Phương Linh", image: "https://drive.google.com/thumbnail?id=1q_UyoAEvt3ppqk0kq_GrQKJ82rec0tTr&sz=w1000", wish: "Chúc mồng 8 tháng 3 Đậu Phụ Linh vui vẻ, xinh gái, gặp nhiều may mắn và thành công trong cuộc sống 😚🥰" },
+      20: { stt: 20, name: "Trương Huyền Khánh Linh", image: "https://drive.google.com/thumbnail?id=1LHGWfEIRl-Eg7Y13Y2k8sS8XbBbJ8Efu&sz=w1000", wish: "Chúc zợ iu 8/3 zui zẻ hạnh phúc mạnh khỏe và càng ngày càng xinh đẹppp để tiếp tục vững bước trên con đường đi tới tương lai ahii 💪💪💐" },
+      22: { stt: 22, name: "Hà Phương Mai", image: "https://drive.google.com/thumbnail?id=15ReczNe6Ln1qYAU7LcoypYR32qsDpk_Y&sz=w1000", wish: "Chúc con mẹ Thủy luôn xinh đẹp, vui tươi và sớm rước Fufu c6r5  Một đoàn khảo cổ ghé thăm Phát hiện xác ướp 500 năm tròn Còn nguyên da thịt chưa mòn Mồm xác ướp có chấm tròn màu đen Mặc áo thương hiệu hãng kem Túi quần phát hiện tệp tem đã mờ Qua nhiều tư liệu giấy tờ Kết luận xác ướp chim mơ người Tày" },
+      23: { stt: 23, name: "Nguyễn Bảo Kim Ngân", image: "https://drive.google.com/thumbnail?id=1Kcd3xv6Gg1nP6mR0Jc7Mb2khFuYEL99A&sz=w1000", wish: "Chúc em iu 8/3 vui vẻ mạnh khoẻ học thật giỏi luôn xinh đẹp và mãi mơ mộng giữa đời thực dụng nhưng đừng mơ mộng quá rồi quên em cho chị chúc xong rồi quẹo em nhaaa" },
+      24: { stt: 24, name: "Nguyễn Thị Kim Ngân", image: "https://drive.google.com/thumbnail?id=1_8Tm0em49qBzFaQcOjPrXGy7wdEKAgSS&sz=w1000", wish: "Chúc em xinh 8/3 vui vẻ, hạnh phúc, luôn vui tươi rạng rỡ, bớt deadline, nhiều niềm vui và ăn mãi không béo 🫶🏻" },
+      25: { stt: 25, name: "Trần Phạm Thiên Ngân", image: "https://drive.google.com/thumbnail?id=1oJ02CSQ7cWk6jGkw-zVwOMeYSw9m4uup&sz=w1000", wish: "Chúc bạn ngày 8 tháng 3 thật tràn đầy hạnh phúc và niềm vui. Chúc bạn có một ngày thật ý nghĩa bên bạn bè và gia đình." },
+      26: { stt: 26, name: "Lý Nguyễn Bảo Ngọc", image: "https://drive.google.com/thumbnail?id=1kHgtQykmM4m5BfEHnIeHDkGew6WMiyx3&sz=w1000", wish: "Mừng ngày Quốc tế Phụ nữ, chúc cậuu mãi xinh đẹp, vui vẻ, hạnh phúc, mạnh khỏe, luôn vững tin vào bản thân và đạt được những điều mình mong muốn nhaa." },
+      27: { stt: 27, name: "Nguyễn Duy Thảo Nguyên", image: "https://drive.google.com/thumbnail?id=15ReczNe6Ln1qYAU7LcoypYR32qsDpk_Y&sz=w1000", wish: "Chúc en bé 8/3 vui vẻ, mạnh khỏe và có thật nhiều niềm vui nhaaa" },
+      28: { stt: 28, name: "Trần Thị Thanh Nhã", image: "https://drive.google.com/thumbnail?id=15ReczNe6Ln1qYAU7LcoypYR32qsDpk_Y&sz=w1000", wish: "Chúc chị bé một ngày 8/3 thật vui vẻ, xinh đẹp và luôn hạnh phúc nhéeee" },
+      30: { stt: 30, name: "Trần Đoàn Uyên Nhi", image: "https://drive.google.com/thumbnail?id=18882AglD3__gQ6XLvAEaJS1Y9ZSQNVaY&sz=w1000", wish: "Chúc Uyên Nhi 8/3 luôn rực rỡ như ánh mặt trời, xinh đẹp như hoa và hạnh phúc trong từng khoảnh khắc. Mong em luôn giữ nụ cười tươi, trái tim ấm áp và gặt hái thật nhiều thành công trên con đường của mình! 💖✨" },
+      32: { stt: 32, name: "Nguyễn Lê Hoàng Phương", image: "https://drive.google.com/thumbnail?id=1q_UyoAEvt3ppqk0kq_GrQKJ82rec0tTr&sz=w1000", wish: "Chúc em/cậu 8/3 với nhiều niềm vui, luôn xinh đẹp, dễ thương và đạt được những điều mà mình mong muốn nha" },
+      33: { stt: 33, name: "Nguyễn Phước Xuân Phương", image: "https://drive.google.com/thumbnail?id=1LHGWfEIRl-Eg7Y13Y2k8sS8XbBbJ8Efu&sz=w1000", wish: "Chúc cậu luôn xinh đẹp rạng ngời như ánh mặt trời ban mai, tươi vui như những cánh hoa nở rộ. Mong rằng mỗi ngày trôi qua đều mang đến cho cậu thật nhiều niềm vui, tiếng cười và những điều tốt đẹp nhất!" },
+      35: { stt: 35, name: "Châu Lê Khánh Quỳnh", image: "https://drive.google.com/thumbnail?id=1LHGWfEIRl-Eg7Y13Y2k8sS8XbBbJ8Efu&sz=w1000", wish: "Chúc Quỳnh ngày 8/3 luôn rạng rỡ như ánh ban mai, xinh đẹp như đóa hoa tháng ba và hạnh phúc trong từng khoảnh khắc. Mong em mãi giữ nụ cười tươi, trái tim ấm áp và gặt hái thật nhiều thành công trong cuộc sống!" },
+      36: { stt: 36, name: "Trần Đỗ Như Quỳnh", image: "https://drive.google.com/thumbnail?id=15ReczNe6Ln1qYAU7LcoypYR32qsDpk_Y&sz=w1000", wish: "Nhân ngày 8/3, chúc bạn luôn xinh đẹp, vui vẻ, học tốt và mãi là một cô gái tuyệt vời. Mong rằng mỗi ngày trôi qua với bạn đều thật ý nghĩa, ngập tràn tiếng cười và những điều tốt đẹp nhất!" },
+      37: { stt: 37, name: "Lê Nguyễn Minh Tâm", image: "https://drive.google.com/thumbnail?id=12O-QVVetX8MvmRiHwco8bsxBWhyhQ0j3&sz=w1000", wish: "Chúc cậu ngày 8/3 thật vui vẻ, hạnh phúc và ngập tràn tiếng cười. Mong cậu luôn xinh đẹp, tự tin và học thật giỏi nha!" },
+      38: { stt: 38, name: "Nguyễn Ngọc Minh Tâm", image: "https://drive.google.com/thumbnail?id=15ReczNe6Ln1qYAU7LcoypYR32qsDpk_Y&sz=w1000", wish: "Chúc cậu một ngày 8/3 thật rạng rỡ, hạnh phúc và nhận được thật nhiều yêu thương. Mong cậu luôn xinh đẹp, vui vẻ và gặp thật nhiều may mắn trong cuộc sống!" },
+      39: { stt: 39, name: "Bùi Minh Thư", image: "https://drive.google.com/thumbnail?id=1p5WCceBqmcMFkVW-Oe_8OatBPhHamR_f&sz=w1000", wish: "8/3 chúc bồ iu thật nhiều niềm vui, xinh đẹp, học ngày càng giỏi, làm gì cũng suôn sẻ. Chúc bồ luôn rạng rỡ, hạnh phúc và gặp thật nhiều điều tốt đẹp nhaa" },
+      40: { stt: 40, name: "Đinh Thị Thủy Tiên", image: "https://drive.google.com/thumbnail?id=1oJ02CSQ7cWk6jGkw-zVwOMeYSw9m4uup&sz=w1000", wish: "Nhân ngày Quốc tế Phụ nữ 8/3, chúc bạn luôn xinh đẹp, tự tin và tràn đầy năng lượng tích cực. Mong rằng bạn sẽ luôn hạnh phúc, gặp nhiều may mắn và thành công trong mọi việc!" },
+      41: { stt: 41, name: "Trần Ngọc Minh Trang", image: "https://drive.google.com/thumbnail?id=1cQAqdfF_wNOrRXdqk7lia4qHFEZ-DjdN&sz=w1000", wish: "Chúc bạn một mồng tám tháng ba vui vẻ hát ca la la âu yeah baby. Càng ngày càng xinh đẹp, học giỏi nhe bờ rô ahihihihi" },
+      42: { stt: 42, name: "Nguyễn Vũ Bảo Trâm", image: "https://drive.google.com/thumbnail?id=1q_UyoAEvt3ppqk0kq_GrQKJ82rec0tTr&sz=w1000", wish: "Chúc b Trâm 8/3 vui vẻ, ngày càng vẽ đẹp và thay thế mấy con AI rerach nha" },
+      45: { stt: 45, name: "Hồ Thị Cẩm Vân", image: "https://drive.google.com/thumbnail?id=1p5WCceBqmcMFkVW-Oe_8OatBPhHamR_f&sz=w1000", wish: "Chúc bạn 8/3 rạng rỡ như hoa và kiêu sa như ngọc. Mừng ngày của phái đẹp, chúc bạn luôn tự tin. Chúc bạn nhận được nhiều quà, nhiều hoa và thật nhiều tình yêu, hạnh phúc ho ho ho ho ho ho ho " },
+      2004: { stt: 2004, name: "Ngô Thị Minh Hạnh", image: "https://drive.google.com/thumbnail?id=1q_UyoAEvt3ppqk0kq_GrQKJ82rec0tTr&sz=w1000", wish: "Chúc cô ngày 8/3 thật nhiều niềm vui, luôn xinh đẹp, hạnh phúc và gặt hái nhiều thành công trên con đường giảng dạy ạ" }
+    };
+
+    const displayArea = document.getElementById('displayArea');
+    const searchInput = document.getElementById('searchStt');
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderEmptyPreview() {
+      displayArea.innerHTML = `
+        <div class="empty-state">
+          Nhập <b>số thứ tự</b> rồi bấm <b>Mở trang riêng</b><br>
+          để xem lời chúc của bạn trong lớp.
+        </div>
+      `;
+    }
+
+    function showWishPage() {
+      const searchValue = searchInput.value.trim();
+
+      if (!searchValue) {
+        alert('Hãy nhập số thứ tự cần xem.');
+        return;
+      }
+
+      const stt = Number(searchValue);
+      if (!Number.isInteger(stt)) {
+        alert('Số thứ tự không hợp lệ.');
+        return;
+      }
+
+      const student = studentData[stt];
+
+      if (!student) {
+        displayArea.innerHTML = `
+          <div class="empty-state">
+            Không tìm thấy bạn có số thứ tự <b>${escapeHtml(stt)}</b> trong danh sách.<br>
+            Hãy kiểm tra lại STT rồi thử lại.
+          </div>
+        `;
+        return;
+      }
+
+      displayArea.innerHTML = `
+        <div class="wish-page">
+          <div class="wish-left">
+            <div class="wish-number">STT ${escapeHtml(student.stt)}</div>
+            <img
+              class="wish-image"
+              src="${escapeHtml(student.image || defaultImage)}"
+              alt="Ảnh ${escapeHtml(student.name)}"
+              onerror="this.onerror=null;this.src='${defaultImage}'"
+            >
+          </div>
+          <div class="wish-right">
+            <p class="mini-title">Gửi đến bạn</p>
+            <h3 class="wish-name">${escapeHtml(student.name)}</h3>
+            <p class="wish-text">${escapeHtml(student.wish)}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    searchInput.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        showWishPage();
+      }
+    });
+
+    window.showWishPage = showWishPage;
+    renderEmptyPreview();
+  </script>
+</body>
+</html>
